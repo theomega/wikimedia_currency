@@ -1,4 +1,11 @@
 # vim:tw=80:ts=2:sw=2:colorcolumn=81:nosmartindent
 
 Critic:
-  - 
+  - The database connection and the CurrencyConverter should be decoupeled, in
+    the best case using a database abstraction layer.
+  - The error handling is only based on 'die' statements. One should better use
+    Exceptions. Also the logging is done to the browser-window in HTML, should
+    be better done using a log framework in a log file.
+  - The XML is not checked for well-formedness. If for example the same currency
+    occurs twice, a SQL-Error will get thrown (due to duplicate primary key).
+

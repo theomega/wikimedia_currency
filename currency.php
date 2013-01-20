@@ -49,6 +49,8 @@ class CurrencyConverter {
     return $r;
   }
 
+	#Wrapper function on libxmls loading to check for errors and die in case of an
+  #error
   private function loadXML($url) {
     $sxe = new SimpleXMLElement($url, NULL, True);
 	  if ($sxe === false) {
@@ -60,6 +62,7 @@ class CurrencyConverter {
 		}
 		return $sxe;
 	}
+
 }
 
 if(!isset($_GET['action'])) {

@@ -1,6 +1,18 @@
 # vim:tw=80:ts=2:sw=2:colorcolumn=81:nosmartindent
 
-Critic:
+Overall:
+	- The demanded API/function is not suitable for the second part (the mobile
+		website): While the function can be used to transfer X amount of currency Y
+    to USD, the website needs the functionality to transfer X USD to currency Y.
+    I'm not sure how this was intended. For this reason I implemented the
+		demanded function 'convertToUSDFromStr'. The function needed for the mobile
+		part is named 'convertFromUSD'.
+  - The demanded API/function have a strange interface involving a string which
+    contains two different things: The currency and the amount. I have
+		implemented this in the function 'convertToUSDFromStr' but a more convenient
+    'convertToUSD' also exists.
+
+Critic ("what could have been done better?"):
   - The database connection and the CurrencyConverter should be decoupeled, in
     the best case using a database abstraction layer.
   - The error handling is only based on 'die' statements. One should better use
@@ -8,4 +20,6 @@ Critic:
     be better done using a log framework in a log file.
   - The XML is not checked for well-formedness. If for example the same currency
     occurs twice, a SQL-Error will get thrown (due to duplicate primary key).
-
+  - The convertStrs function executes 'n' queries where 'n' is the element count 
+    in the array. This is discouraged as queries are expensive. Should have been
+		rewritten using a 'WHERE IN' SQL Statement.

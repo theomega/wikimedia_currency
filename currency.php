@@ -86,6 +86,16 @@ class CurrencyConverter {
     return $rate;
   }
 
+  #Returns an array containing all currency names available in the database
+  public function getCurrencies() {
+    $dbResults=$this->query("SELECT currency FROM exchange_rates");
+    $res = array();
+    while ($row = $dbResults->fetch_assoc()) {
+      $res[] = $row['currency']; 
+    }
+    return $res;
+  }
+
   #Wrapper function on mysqli::query which checks for errors and dies if an
   #error has occured.
   private function query($query) {
@@ -105,8 +115,6 @@ class CurrencyConverter {
     }
     return $s;
   }
-
-
 
   #Wrapper function on libxmls loading to check for errors and die in case of an
   #error
@@ -144,12 +152,17 @@ if($action=='refresh') {
     die('Specify the "amount" parameter');
   }
   echo $cc->convertFromUSD($_GET['amount'], $_GET['currency']);
+} else if ($action=='getCurrencies') {
+   echo json_encode($cc->getCurrencies());
 } else if ($action=='test') {
   echo 'Single Test: <br/>';
   echo 'JPY 5000: '.$cc->convertToUSDFromStr('JPY 5000').'<br/>';
   echo 'Multiple Test: <br/>';
   echo 'array(JPY 5000, CZK 62.5): ';
   print_r($cc->convertToUSDFromStr(array( 'JPY 5000', 'CZK 62.5')));
+}  else {
+  die('This script supports the following actions: "refresh", "fromUSD",'.
+      '"test"');
 }
 
 ?>

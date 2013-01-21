@@ -4,35 +4,37 @@
   <head>
     <meta charset="utf-8">
     <title>Wikimedia Donations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
   </head>
   <body>
 
-  <form class="form-horizontal">
+  <form class="xform-horizontal">
     <fieldset>
       <legend>Select Your Donation</legend>
       <div class="control-group">
         <label class="control-label">Currency</label>
-        <div class="btn-group controls" id="currencies" data-toggle="buttons-radio">
-          <button type="button" class="btn">USD</button>
-          <button type="button" class="btn">2CY</button>
-          <button type="button" class="btn">3CY</button>
+        <div class="controls" id="currencies" data-toggle="buttons-radio">
+          <button type="button" class="btn btn-large">USD</button>
+          <button type="button" class="btn btn-large">2CY</button>
+          <button type="button" class="btn btn-large">3CY</button>
         </div>
       </div>
 
       <div class="control-group">
         <label class="control-label">Amount</label>
         <div class="btn-group btn-group-vertical controls" data-toggle="buttons-radio" id="amounts">
-          <button type="button" class="btn" data-usd-amount="10">10 USD</button>
-          <button type="button" class="btn" data-usd-amount="25">25 USD</button>
-          <button type="button" class="btn" data-usd-amount="50">50 USD</button>
-          <button type="button" class="btn" data-usd-amount="100">100 USD</button>
+          <button type="button" class="btn btn-large" data-usd-amount="10">10 USD</button>
+          <button type="button" class="btn btn-large" data-usd-amount="25">25 USD</button>
+          <button type="button" class="btn btn-large" data-usd-amount="50">50 USD</button>
+          <button type="button" class="btn btn-large" data-usd-amount="100">100 USD</button>
         </div>
       </div>
 
       <div class="control-group form-actions">
         <div class="controls">
-          <button type="submit" class="btn btn-primary">Donate!</button>  
+          <button type="submit" class="btn btn-primary btn-large">Donate!</button>  
         </div>
       </div>
     </fieldset>
@@ -46,9 +48,9 @@
       //Load currencies and update currencies selector 
       $.getJSON('currency.php?action=getCurrencies', function(data) {
         $('#currencies').empty();
-        $('#currencies').append('<button class="btn active">USD</button>');
+        $('#currencies').append('<button class="btn btn-large active">USD</button>');
         for(i=0; i<data.length; i++) {
-          $('#currencies').append('<button class="btn">'+data[i]+'</button>');
+          $('#currencies').append('<button class="btn btn-large">'+data[i]+'</button>');
         }
 
         //Add Events Handlers for currency buttons

@@ -1,22 +1,22 @@
-# vim:tw=80:ts=2:sw=2:colorcolumn=81:nosmartindent
+# vim:tw=80:ts=2:sw=2:colorcolumn=81:nosmartindent:expandtab
 
 Overall:
-	- The demanded API/function is not suitable for the second part (the mobile
-		website): While the function can be used to transfer X amount of currency Y
+  - The demanded API/function is not suitable for the second part (the mobile
+    website): While the function can be used to transfer X amount of currency Y
     to USD, the website needs the functionality to transfer X USD to currency Y.
     I'm not sure how this was intended. For this reason I implemented the
-		demanded function 'convertToUSDFromStr'. For the mobile site, I used a
-		'getRate' function which only returns the rate, the actual conversion is
-		done in the browser. This also heavily reduces the need for network calls.
+    demanded function 'convertToUSDFromStr'. For the mobile site, I used a
+    'getRate' function which only returns the rate, the actual conversion is
+    done in the browser. This also heavily reduces the need for network calls.
 
   - The demanded API/function have a strange interface involving a string which
     contains two different things: The currency and the amount. I have
-		implemented this in the function 'convertToUSDFromStr' but a more convenient
+    implemented this in the function 'convertToUSDFromStr' but a more convenient
     'convertToUSD' also exists.
 
   - The HTML markup is a little bit more verbose than needed. This results from
     the fact that the 'Twitter Bootstrap' HTML template was used which already
-		contains a form layout. The more verbose HTML makes it more flexible.
+    contains a form layout. The more verbose HTML makes it more flexible.
 
 Critic ("what could have been done better?"):
   - The database connection and the CurrencyConverter should be decoupeled, in
@@ -26,6 +26,6 @@ Critic ("what could have been done better?"):
     be better done using a log framework in a log file.
   - The XML is not checked for well-formedness. If for example the same currency
     occurs twice, a SQL-Error will get thrown (due to duplicate primary key).
-  - The convertStrs function executes 'n' queries where 'n' is the element count 
-    in the array. This is discouraged as queries are expensive. Should have been
-		rewritten using a 'WHERE IN' SQL Statement.
+  - The `convertToUSDFromStr` function executes 'n' queries where 'n' is the
+    element count in the array. This is discouraged as queries are expensive.
+    Should have been rewritten using a 'WHERE IN' SQL Statement.

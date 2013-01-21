@@ -50,7 +50,7 @@
         for(i=0; i<data.length; i++) {
           $('#currencies').append('<button class="btn">'+data[i]+'</button>');
         }
-        
+
         //Add Events Handlers for currency buttons
         $('#currencies .btn').bind('click', function() {
           currency=$(this).text();
@@ -76,6 +76,7 @@
         });
       });
  
+      //Add event handler for submit button and display alert
       $('#donateButton').bind('click', function() {
         currency=$('#currencies .active').text();
         amountUSD=$('#amounts .active').data('usd-amount');
@@ -84,7 +85,7 @@
           alert("You donate "+amountForeign+" "+currency+" (="+amountUSD+" USD)");
         } else {
           alert("You donate "+amountUSD+" USD");
-        }  
+        }
         return false;
       });
     });

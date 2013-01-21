@@ -14,25 +14,25 @@
       <div class="control-group">
         <label class="control-label">Currency</label>
         <div class="btn-group controls" id="currencies" data-toggle="buttons-radio">
-          <button class="btn">USD</button>
-          <button class="btn">2CY</button>
-          <button class="btn">3CY</button>
+          <button type="button" class="btn">USD</button>
+          <button type="button" class="btn">2CY</button>
+          <button type="button" class="btn">3CY</button>
         </div>
       </div>
 
       <div class="control-group">
         <label class="control-label">Amount</label>
         <div class="btn-group btn-group-vertical controls" data-toggle="buttons-radio" id="amounts">
-          <button class="btn" data-usd-amount="10">10 USD</button>
-          <button class="btn" data-usd-amount="25">25 USD</button>
-          <button class="btn" data-usd-amount="50">50 USD</button>
-          <button class="btn" data-usd-amount="100">100 USD</button>
+          <button type="button" class="btn" data-usd-amount="10">10 USD</button>
+          <button type="button" class="btn" data-usd-amount="25">25 USD</button>
+          <button type="button" class="btn" data-usd-amount="50">50 USD</button>
+          <button type="button" class="btn" data-usd-amount="100">100 USD</button>
         </div>
       </div>
 
       <div class="control-group form-actions">
         <div class="controls">
-          <button type="button" class="btn btn-primary" id="donateButton">Donate!</button>  
+          <button type="submit" class="btn btn-primary">Donate!</button>  
         </div>
       </div>
     </fieldset>
@@ -52,7 +52,9 @@
         }
 
         //Add Events Handlers for currency buttons
-        $('#currencies .btn').bind('click', function() {
+        $('#currencies .btn').bind('click', function(event) {
+          event.preventDefault();
+
           currency=$(this).text();
           if(currency=='USD') {
             //For USD just copy the data attribute
@@ -77,7 +79,7 @@
       });
  
       //Add event handler for submit button and display alert
-      $('#donateButton').bind('click', function() {
+      $('form').submit(function() {
         currency=$('#currencies .active').text();
         amountUSD=$('#amounts .active').data('usd-amount');
         if(currency!='USD') {

@@ -83,6 +83,11 @@
  
       //Add event handler for submit button and display alert
       $('form').submit(function() {
+        if($('#amounts .active').length!=1) {
+          alert("You have not selected the amount you want to donate");
+          return false;
+        }    
+
         currency=$('#currencies .active').text();
         amountUSD=$('#amounts .active').data('usd-amount');
         if(currency!='USD') {

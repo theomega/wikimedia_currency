@@ -66,13 +66,8 @@ class CurrencyConverter {
     return $amount*$this->getRate($currency);
   }
 
-  #Converts a amount of USD into the equivalent in a foreign currency
-  public function convertFromUSD($amount, $currency) {
-    return $amount/$this->getRate($currency);
-  }
-
   #Helper function which simply returns the exchange rate for a give currency
-  private function getRate($currency) {
+  public function getRate($currency) {
     $stmt = $this->prepare("SELECT rate FROM exchange_rates WHERE ".
                            "currency=?;");
     $stmt->bind_param('s', $currency);
@@ -144,14 +139,11 @@ if($action=='refresh') {
   echo('Refreshing the conversion data<br />');
   $count = $cc->refresh();
   echo('Inserted '.$count.' records in the database');
-} else if ($action=='fromUSD') {
+} else if ($action=='getRate') {
   if(!isset($_GET['currency'])) {
     die('Specify the "currency" parameter');
   }
-  if(!isset($_GET['amount'])) {
-    die('Specify the "amount" parameter');
-  }
-  echo $cc->convertFromUSD($_GET['amount'], $_GET['currency']);
+  echo $cc->getRate($_GET['currency']);
 } else if ($action=='getCurrencies') {
    echo json_encode($cc->getCurrencies());
 } else if ($action=='test') {

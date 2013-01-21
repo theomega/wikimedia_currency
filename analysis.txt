@@ -34,3 +34,5 @@ Critic ("what could have been done better?"):
   - The website was only tested on Google Chrome, Firefox, Android 4.1 and iOS
     5. A more in depth analysis on the compatibility is needed, although the
     usage of standard libraries reduces the probability of problems.
+  - The HTML-Page could save some more requests if it cached the rates.
+    Especially on mobile devices, saving network requests is important.

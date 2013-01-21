@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- vim: set tw=120 ts=2 sw=2 colorcolumn=121 nosmartindent: --> 
+  <!-- vim: set tw=120 ts=2 sw=2 colorcolumn=121 nosmartindent expandtab: --> 
   <head>
     <meta charset="utf-8">
     <title>Wikimedia Donations</title>
@@ -9,84 +9,84 @@
   <body>
 
   <form class="form-horizontal">
-		<fieldset>
-			<legend>Select Your Donation</legend>
-			<div class="control-group">
-				<label class="control-label">Currency</label>
-				<div class="btn-group controls" id="currencies" data-toggle="buttons-radio">
-					<button class="btn">USD</button>
-					<button class="btn">2CY</button>
-					<button class="btn">3CY</button>
-				</div>
-			</div>
+    <fieldset>
+      <legend>Select Your Donation</legend>
+      <div class="control-group">
+        <label class="control-label">Currency</label>
+        <div class="btn-group controls" id="currencies" data-toggle="buttons-radio">
+          <button class="btn">USD</button>
+          <button class="btn">2CY</button>
+          <button class="btn">3CY</button>
+        </div>
+      </div>
 
-			<div class="control-group">
-				<label class="control-label">Amount</label>
-				<div class="btn-group btn-group-vertical controls" data-toggle="buttons-radio" id="amounts">
-					<button class="btn" data-usd-amount="10">10 USD</button>
-					<button class="btn" data-usd-amount="25">25 USD</button>
-					<button class="btn" data-usd-amount="50">50 USD</button>
+      <div class="control-group">
+        <label class="control-label">Amount</label>
+        <div class="btn-group btn-group-vertical controls" data-toggle="buttons-radio" id="amounts">
+          <button class="btn" data-usd-amount="10">10 USD</button>
+          <button class="btn" data-usd-amount="25">25 USD</button>
+          <button class="btn" data-usd-amount="50">50 USD</button>
           <button class="btn" data-usd-amount="100">100 USD</button>
-				</div>
-			</div>
+        </div>
+      </div>
 
       <div class="control-group form-actions">
-				<div class="controls">
-				  <button type="button" class="btn btn-primary" id="donateButton">Donate!</button>	
-				</div>
+        <div class="controls">
+          <button type="button" class="btn btn-primary" id="donateButton">Donate!</button>  
+        </div>
       </div>
-		</fieldset>
-	</form>
+    </fieldset>
+  </form>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function() {
-			//Load currencies and update currencies selector 
-			$.getJSON('currency.php?action=getCurrencies', function(data) {
-				$('#currencies').empty();
-      	$('#currencies').append('<button class="btn active">USD</button>');
- 				for(i=0; i<data.length; i++) {
-					$('#currencies').append('<button class="btn">'+data[i]+'</button>');
-				}
+      //Load currencies and update currencies selector 
+      $.getJSON('currency.php?action=getCurrencies', function(data) {
+        $('#currencies').empty();
+        $('#currencies').append('<button class="btn active">USD</button>');
+        for(i=0; i<data.length; i++) {
+          $('#currencies').append('<button class="btn">'+data[i]+'</button>');
+        }
         
-				//Add Events Handlers for currency buttons
+        //Add Events Handlers for currency buttons
         $('#currencies .btn').bind('click', function() {
-					currency=$(this).text();
-         	if(currency=='USD') {
-						//For USD just copy the data attribute
-						$('#amounts .btn').each(function() {
-							$(this).text($(this).data('usd-amount')+' USD');
-							$(this).removeData('foreign-amount');
-						});
-					} else {
-						//For all other currencies, use an AJAX call to get rate, then update buttons
-						$.ajax({url:'currency.php?action=getRate&currency='+currency}).done(function(data) {
-							if(!$.isNumeric(data)) {
-								alert('Could not get exchange rate for '+currency);
-							}
+          currency=$(this).text();
+          if(currency=='USD') {
+            //For USD just copy the data attribute
+            $('#amounts .btn').each(function() {
+              $(this).text($(this).data('usd-amount')+' USD');
+              $(this).removeData('foreign-amount');
+            });
+          } else {
+            //For all other currencies, use an AJAX call to get rate, then update buttons
+            $.ajax({url:'currency.php?action=getRate&currency='+currency}).done(function(data) {
+              if(!$.isNumeric(data)) {
+                alert('Could not get exchange rate for '+currency);
+              }
               $('#amounts .btn').each(function() {
-								foreignAmount=$(this).data('usd-amount')/data;
-								$(this).text(foreignAmount.toFixed(2)+' '+currency);
-								$(this).data('foreign-amount', foreignAmount);
-							});
-						});
-					}
-				});
-			});
+                foreignAmount=$(this).data('usd-amount')/data;
+                $(this).text(foreignAmount.toFixed(2)+' '+currency);
+                $(this).data('foreign-amount', foreignAmount);
+              });
+            });
+          }
+        });
+      });
  
-			$('#donateButton').bind('click', function() {
-				currency=$('#currencies .active').text();
+      $('#donateButton').bind('click', function() {
+        currency=$('#currencies .active').text();
         amountUSD=$('#amounts .active').data('usd-amount');
-				if(currency!='USD') {
-					amountForeign=$('#amounts .active').data('foreign-amount');
-					alert("You donate "+amountForeign+" "+currency+" (="+amountUSD+" USD)");
-				} else {
-			 		alert("You donate "+amountUSD+" USD");
-				}  
-				return false;
-			});
+        if(currency!='USD') {
+          amountForeign=$('#amounts .active').data('foreign-amount');
+          alert("You donate "+amountForeign+" "+currency+" (="+amountUSD+" USD)");
+        } else {
+          alert("You donate "+amountUSD+" USD");
+        }  
+        return false;
+      });
     });
   </script>
   </body>

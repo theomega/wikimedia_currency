@@ -52,7 +52,10 @@
         }
 
         //Add Events Handlers for currency buttons
-        $('#currencies .btn').bind('click', function() {
+        $('#currencies .btn').bind('click', function(event) {
+          //Prevent Form submission on button click
+          event.preventDefault();
+
           currency=$(this).text();
           if(currency=='USD') {
             //For USD just copy the data attribute

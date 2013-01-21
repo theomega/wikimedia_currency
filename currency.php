@@ -135,26 +135,35 @@ if(!isset($_GET['action'])) {
 $action=$_GET['action'];
 
 
-if($action=='refresh') {
-  echo('Refreshing the conversion data<br />');
-  $count = $cc->refresh();
-  echo('Inserted '.$count.' records in the database');
-} else if ($action=='getRate') {
-  if(!isset($_GET['currency'])) {
-    die('Specify the "currency" parameter');
-  }
-  echo $cc->getRate($_GET['currency']);
-} else if ($action=='getCurrencies') {
-   echo json_encode($cc->getCurrencies());
-} else if ($action=='test') {
-  echo 'Single Test: <br/>';
-  echo 'JPY 5000: '.$cc->convertToUSDFromStr('JPY 5000').'<br/>';
-  echo 'Multiple Test: <br/>';
-  echo 'array(JPY 5000, CZK 62.5): ';
-  print_r($cc->convertToUSDFromStr(array( 'JPY 5000', 'CZK 62.5')));
-}  else {
-  die('This script supports the following actions: "refresh", "fromUSD",'.
-      '"test"');
+switch($action) {
+  case 'refresh':
+    echo('Refreshing the conversion data<br />');
+    $count = $cc->refresh();
+    echo('Inserted '.$count.' records in the database');
+    break;
+
+  case 'getRate':
+    if(!isset($_GET['currency'])) {
+      die('Specify the "currency" parameter');
+    }
+    echo $cc->getRate($_GET['currency']);
+    break;
+
+  case 'getCurrencies':
+    echo json_encode($cc->getCurrencies());
+    break;
+
+  case 'test':
+    echo 'Single Test: <br/>';
+    echo 'JPY 5000: '.$cc->convertToUSDFromStr('JPY 5000').'<br/>';
+    echo 'Multiple Test: <br/>';
+    echo 'array(JPY 5000, CZK 62.5): ';
+    print_r($cc->convertToUSDFromStr(array( 'JPY 5000', 'CZK 62.5')));
+    break;
+
+  default:
+    die('This script supports the following actions: "refresh", "getRate",'.
+        '"getCurrencies", "test"');
 }
 
 ?>

@@ -19,7 +19,7 @@ Overall:
     contains a form layout. The more verbose HTML makes it more flexible.
 
 Critic ("what could have been done better?"):
-  - The database connection and the CurrencyConverter should be decoupeled, in
+  - The database connection and the CurrencyConverter should be decoupled, in
     the best case using a database abstraction layer.
   - The error handling is only based on 'die' statements. One should better use
     Exceptions. Also the logging is done to the browser-window in HTML, should
@@ -29,3 +29,8 @@ Critic ("what could have been done better?"):
   - The `convertToUSDFromStr` function executes 'n' queries where 'n' is the
     element count in the array. This is discouraged as queries are expensive.
     Should have been rewritten using a 'WHERE IN' SQL Statement.
+  - The contents of the sub folders ("js", "css", "img") are imported from
+    Twitter Bootstrap. This could have been done using git sub modules.
+  - The website was only tested on Google Chrome, Firefox, Android 4.1 and iOS
+    5. A more in depth analysis on the compatibility is needed, although the
+    usage of standard libraries reduces the probability of problems.
